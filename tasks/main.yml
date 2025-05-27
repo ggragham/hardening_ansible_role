@@ -1,2 +1,3 @@
 ---
-...
+- name: Base hardening task
+  include_tasks: hardening.yml
