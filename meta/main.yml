@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Grell Gragham
+  description: Linux system hardening
+
+  license: GPL-3.0
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+        - 12
+    - name: Fedora
+      versions:
+        - 41
+        - 42
