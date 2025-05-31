@@ -20,21 +20,21 @@
 
     - name: Blacklist unused modules
       copy:
-        src: modules_blacklist.conf
+        src: hardening_modules_blacklist.conf
         dest: /etc/modprobe.d/blacklist.conf
         mode: 0640
       become: true
 
     - name: Hardening kernel settings
       copy:
-        src: kernel_hardening.conf
+        src: hardening_kernel.conf
         dest: /etc/sysctl.d/hardening.conf
         mode: 0640
       become: true
 
     - name: Disable core dumps
       copy:
-        src: systemd_coredump.conf
+        src: hardening_systemd_coredump.conf
         dest: /etc/systemd/coredump.conf
         mode: 0640
       become: true
