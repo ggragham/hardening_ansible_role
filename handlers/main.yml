@@ -1,4 +1,10 @@
 ---
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
+  become: true
+
 - name: Restart fail2ban
   service:
     name: fail2ban

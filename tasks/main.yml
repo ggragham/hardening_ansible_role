@@ -3,6 +3,10 @@
   include_tasks: hardening.yml
   when: HARDENING_CONFIG_ENABLED
 
+- name: Config SSH
+  include_tasks: ssh.yml
+  when: SSH_CONFIG_ENABLED
+
 - name: Install and config fail2ban
   include_tasks: fail2ban.yml
   when: FAIL2BAN_ENABLED
