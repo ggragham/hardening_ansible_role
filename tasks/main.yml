@@ -1,12 +1,15 @@
 ---
 - name: Base hardening task
-  include_tasks: hardening.yml
+  import_tasks: hardening.yml
   when: HARDENING_CONFIG_ENABLED
+  tags: hardening
 
 - name: Config SSH
-  include_tasks: ssh.yml
+  import_tasks: ssh.yml
   when: SSH_CONFIG_ENABLED
+  tags: ssh
 
 - name: Install and config fail2ban
-  include_tasks: fail2ban.yml
+  import_tasks: fail2ban.yml
   when: FAIL2BAN_ENABLED
+  tags: fail2ban
