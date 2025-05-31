@@ -1,0 +1,14 @@
+[DEFAULT]
+allowipv6 = false
+bantime.increment = true
+bantime.multipliers	= 1 5 30 60 300 720 1440 2880
+ignoreip  = 127.0.0.1/8 10.0.0.0/8
+bantime   = {{ FAIL2BAN_BANTIME }}
+findtime  = {{ FAIL2BAN_FINDTIME }}
+maxretry  = {{ FAIL2BAN_MAXRETRY }}
+banaction = iptables-allports
+
+[sshd]
+enabled = true
+backend = systemd
+port    = {{ SSH_PORT }}

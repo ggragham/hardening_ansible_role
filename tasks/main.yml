@@ -2,3 +2,7 @@
 - name: Base hardening task
   include_tasks: hardening.yml
   when: HARDENING_CONFIG_ENABLED
+
+- name: Install and config fail2ban
+  include_tasks: fail2ban.yml
+  when: FAIL2BAN_ENABLED

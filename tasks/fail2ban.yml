@@ -1,0 +1,28 @@
+---
+- name: Install fail2ban
+  block:
+    - name: Install fail2ban to Debian
+      apt:
+        name: fail2ban
+        state: latest
+        update_cache: true
+      when: ansible_os_family == 'Debian'
+
+    - name: Install fail2ban to Fedora
+      dnf:
+        name: fail2ban
+        state: latest
+        update_cache: true
+        install_weak_deps: false
+      when: ansible_os_family == 'RedHat'
+
+  become: true
+
+- block:
+    - name: Apply fail2ban config
+      template:
+        src: fail2ban.conf.j2
+        dest: /etc/fail2ban/jail.d/default.conf
+        mode: '0644'
+      notify: Restart fail2ban
+  become: true
