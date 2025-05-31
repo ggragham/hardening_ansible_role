@@ -1,2 +1,6 @@
 ---
+##################################
+###  Base hardening role vars  ###
+##################################
+HARDENING_CONFIG_ENABLED: true
 HARDENING_YESCTYPT_HOST_FACTOR: 8

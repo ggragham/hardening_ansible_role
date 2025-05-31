@@ -1,3 +1,4 @@
 ---
 - name: Base hardening task
   include_tasks: hardening.yml
+  when: HARDENING_CONFIG_ENABLED
