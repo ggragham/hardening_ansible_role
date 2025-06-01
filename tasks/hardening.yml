@@ -18,6 +18,15 @@
             backrefs: true
       become: true
 
+    - name: Set permissions for {{ USERNAME }}'s home directory
+      file:
+        path: /home/{{ USERNAME }}
+        state: directory
+        mode: 0750
+        owner: '{{ USERNAME }}'
+        group: '{{ USERNAME }}'
+      become: true
+
     - name: Blacklist unused modules
       copy:
         src: hardening_modules_blacklist.conf
