@@ -10,6 +10,11 @@ USERNAME: user
 HARDENING_CONFIG_ENABLED: true
 HARDENING_YESCTYPT_HOST_FACTOR: 8
 
+###############################
+###  Debian-based role vars  ##
+###############################
+DEBIAN_HARDENING_ENABLED: true  # Enable or disable Debian- configuration.
+
 #######################
 ###  SSH role vars  ###
 #######################

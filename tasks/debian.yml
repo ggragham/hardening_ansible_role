@@ -1,0 +1,7 @@
+---
+- name: APT seccomp-bpf
+  copy:
+    src: debian_apt_sandbox.conf
+    dest: /etc/apt/apt.conf.d/40sandbox.conf
+    mode: 0640
+  become: true

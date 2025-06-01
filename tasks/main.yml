@@ -4,6 +4,13 @@
   when: HARDENING_CONFIG_ENABLED
   tags: hardening
 
+- name: Tasks for Debian-based systems
+  import_tasks: debian.yml
+  when:
+    - DEBIAN_HARDENING_ENABLED
+    - ansible_os_family == "Debian"
+  tags: debian
+
 - name: Config SSH
   import_tasks: ssh.yml
   when: SSH_CONFIG_ENABLED
