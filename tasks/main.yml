@@ -4,6 +4,11 @@
   when: HARDENING_CONFIG_ENABLED
   tags: hardening
 
+- name: Network tasks
+  import_tasks: network.yml
+  when: NETWORK_CONFIG_ENABLED
+  tags: network
+
 - name: Tasks for Debian-based systems
   import_tasks: debian.yml
   when:

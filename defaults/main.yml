@@ -10,6 +10,12 @@ USERNAME: user
 HARDENING_CONFIG_ENABLED: true
 HARDENING_YESCTYPT_HOST_FACTOR: 8
 
+###########################
+###  Network role vars  ###
+###########################
+NETWORK_CONFIG_ENABLED: true  # Enable or disable network configuration.
+NETWORK_DISABLE_IPV6: true  # Enable or disable ipv6 stack configuration.
+
 ###############################
 ###  Debian-based role vars  ##
 ###############################
