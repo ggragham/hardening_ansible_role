@@ -1,0 +1,27 @@
+---
+- name: Install chronyd
+  block:
+    - name: Install chronyd to Debian
+      apt:
+        name: chrony
+        state: latest
+        update_cache: true
+      when: ansible_os_family == 'Debian'
+
+    - name: Install chronyd to Fedora
+      dnf:
+        name: chrony
+        state: latest
+        update_cache: true
+        install_weak_deps: false
+      when: ansible_os_family == 'RedHat'
+
+  become: true
+
+- name: Apply chrony config
+  copy:
+    src: chrony.conf
+    dest: /etc/chrony.conf
+    mode: 0644
+  notify: Restart chronyd
+  become: true

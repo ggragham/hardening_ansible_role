@@ -20,3 +20,8 @@
   import_tasks: fail2ban.yml
   when: FAIL2BAN_ENABLED
   tags: fail2ban
+
+- name: Install and config chrony
+  import_tasks: chrony.yml
+  when: CHRONY_ENABLED
+  tags: chrony
