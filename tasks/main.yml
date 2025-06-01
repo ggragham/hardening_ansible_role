@@ -11,6 +11,13 @@
     - ansible_os_family == "Debian"
   tags: debian
 
+- name: Tasks for RedHat-based systems
+  import_tasks: redhat.yml
+  when:
+    - REDHAT_HARDENING_ENABLED
+    - ansible_os_family == "RedHat"
+  tags: redhat
+
 - name: Config SSH
   import_tasks: ssh.yml
   when: SSH_CONFIG_ENABLED

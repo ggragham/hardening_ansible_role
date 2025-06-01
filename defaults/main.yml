@@ -15,6 +15,11 @@ HARDENING_YESCTYPT_HOST_FACTOR: 8
 ###############################
 DEBIAN_HARDENING_ENABLED: true  # Enable or disable Debian- configuration.
 
+###############################
+###  RedHat-based role vars  ##
+###############################
+REDHAT_HARDENING_ENABLED: true  # Enable or disable RedHat-based configuration.
+
 #######################
 ###  SSH role vars  ###
 #######################

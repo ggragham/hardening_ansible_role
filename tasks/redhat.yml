@@ -1,0 +1,7 @@
+---
+- name: DNF disable countme
+  copy:
+    src: redhat_dnf_disable_countme.conf
+    dest: /etc/dnf/libdnf5.conf.d/dnf_disable_countme.conf
+    mode: 0644
+  become: true
