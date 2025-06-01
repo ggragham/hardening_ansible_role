@@ -31,12 +31,3 @@
         password_lock: true
       become: true
       when: SSH_REMOVE_ROOT_PASSWORD_ENABLED
-
-    - name: Set passwordless sudo
-      community.general.sudoers:
-        name: users
-        state: present
-        user: '{{ USERNAME }}'
-        commands: ALL
-      become: true
-      when: SSH_PASWORDLESS_SUDO_ENABLED

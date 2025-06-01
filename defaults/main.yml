@@ -26,7 +26,6 @@ REDHAT_HARDENING_ENABLED: true  # Enable or disable RedHat-based configuration.
 SSH_CONFIG_ENABLED: true  # Enable or disable fail2ban configuration.
 SSH_PORT: 22  # Port for SSH access.
 SSH_REMOVE_ROOT_PASSWORD_ENABLED: true  # Enable or disable root password removal.
-SSH_PASWORDLESS_SUDO_ENABLED: true  # Enable or disable passwordless sudo.
 
 ############################
 ###  fail2ban role vars  ###
