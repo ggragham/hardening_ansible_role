@@ -9,4 +9,17 @@
 - name: Install python3-libdnf5
   shell: rpm -q python3-libdnf5 || dnf install --setopt=install_weak_deps=False --assumeyes python3-libdnf5
   changed_when: false
+  become: true
 
+- name: Update RedHat-based system
+  dnf:
+    name: '*'
+    state: latest
+    update_cache: true
+    install_weak_deps: false
+  become: true
+
+- name: Autoremove pkgs
+  dnf:
+    autoremove: true
+  become: true
