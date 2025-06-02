@@ -5,3 +5,21 @@
     dest: /etc/apt/apt.conf.d/40sandbox.conf
     mode: 0640
   become: true
+
+- name: Update deb-based system
+  apt:
+    name: '*'
+    state: latest
+    update_cache: true
+  become: true
+
+- name: Autoremove unused pkgs
+  apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Clean APT cache
+  apt:
+    autoclean: true
+  become: true
