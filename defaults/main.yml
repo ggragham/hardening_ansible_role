@@ -10,6 +10,10 @@ USERNAME: user
 HARDENING_CONFIG_ENABLED: true
 HARDENING_YESCTYPT_HOST_FACTOR: 8
 
+AUTH_FAILLOCK_CONFIG_ENABLED: true  # Enable or disable faillock.
+AUTH_FAILLOCK_MAX_ATTEMPTS: 3  # Maximum number of failed login attempts.
+AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after exceeding attempts.
+
 ###########################
 ###  Network role vars  ###
 ###########################

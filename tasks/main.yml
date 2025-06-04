@@ -4,6 +4,13 @@
   when: HARDENING_CONFIG_ENABLED
   tags: hardening
 
+- name: Auth config
+  import_tasks: auth.yml
+  when:
+    - AUTH_FAILLOCK_CONFIG_ENABLED
+    - ansible_os_family == "RedHat"
+  tags: auth
+
 - name: Network tasks
   import_tasks: network.yml
   when: NETWORK_CONFIG_ENABLED
