@@ -49,3 +49,12 @@ FAIL2BAN_MAXRETRY: 5  # Number of allowed failed login attempts before banning I
 ###  chrony role vars  ###
 ##########################
 CHRONY_ENABLED: true  # Enable or disable fail2ban installation.
+
+############################
+###  Firewall role vars  ###
+############################
+HARDENING_FIREWALL_ENABLED: true  # Enable or disable firewall hardening.
+# Specify the backend for the firewall (options: ufw, firewalld, iptables).
+# Leave empty to use existing firewall installation or throw an error 
+# if no firewall is present on the system.
+HARDENING_FIREWALL_BACKEND: ''

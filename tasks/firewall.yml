@@ -1,0 +1,83 @@
+---
+- name: Install firewall
+  block:
+    - name: Check firewall binaries
+      command: which {{ item.bin }}
+      register: firewall_check_results
+      loop: '{{ firewall_bins }}'
+      loop_control:
+        label: '{{ item.name }}'
+      vars:
+        firewall_bins:
+          - {name: ufw, bin: ufw}
+          - {name: firewalld, bin: firewall-cmd}
+          - {name: iptables, bin: iptables}
+      changed_when: false
+      ignore_errors: true
+      become: true
+
+    - name: Set list of installed firewall backends
+      set_fact:
+        installed_firewalls: >-
+          {{
+            firewall_check_results.results
+            | selectattr('rc', 'equalto', 0)
+            | map(attribute='item.name')
+            | list
+          }}
+
+    - name: Fail if no firewall backend is available and none specified
+      fail:
+        msg: >
+          No firewall backend detected and none was explicitly provided.
+          Please set HARDENING_FIREWALL_BACKEND to one of: ufw, firewalld, iptables.
+      when: installed_firewalls | length == 0 and (HARDENING_FIREWALL_BACKEND | length == 0)
+
+    - name: Should install firewall?
+      set_fact:
+        should_install_firewall: >-
+          {{
+            HARDENING_FIREWALL_BACKEND | length > 0 and (
+              installed_firewalls == [] or
+              (
+                installed_firewalls == ['iptables'] and
+                HARDENING_FIREWALL_BACKEND != 'iptables'
+              )
+            )
+          }}
+
+    # - name: DEBUG
+    #   debug:
+    #     msg: |
+    #       >> SHOULD INSTALL FIREWALL?: {{ should_install_firewall }}
+    #       >> FIREWALL BACKEND REQUESTED: {{ HARDENING_FIREWALL_BACKEND }}
+    #       >> INSTALLED FIREWALLS: {{ installed_firewalls }}
+
+    - name: Install requested firewall backend
+      block:
+        - name: Install firewall to Debian-based distro
+          apt:
+            name: '{{ HARDENING_FIREWALL_BACKEND }}'
+            state: latest
+            update_cache: true
+          when: ansible_os_family == 'Debian'
+        - name: Install firewall to RedHat-based distro
+          dnf:
+            name: '{{ HARDENING_FIREWALL_BACKEND }}'
+            state: latest
+            update_cache: true
+            install_weak_deps: false
+          when: ansible_os_family == 'RedHat'
+        - name: Mark which firewall was just installed
+          set_fact:
+            installed_firewall_backend: '{{ HARDENING_FIREWALL_BACKEND }}'
+      become: true
+      when: should_install_firewall
+
+    - name: Determine effective firewall backend
+      set_fact:
+        firewall_backend: >-
+          {{
+            installed_firewall_backend
+            | default(installed_firewalls[0] | default(''))
+          }}

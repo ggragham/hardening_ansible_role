@@ -44,3 +44,8 @@
   import_tasks: chrony.yml
   when: CHRONY_ENABLED
   tags: chrony
+
+- name: Firewall config
+  import_tasks: firewall.yml
+  when: HARDENING_FIREWALL_ENABLED
+  tags: firewall
