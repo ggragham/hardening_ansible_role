@@ -81,3 +81,35 @@
             installed_firewall_backend
             | default(installed_firewalls[0] | default(''))
           }}
+
+- name: Configure default UFW rules
+  block:
+    - name: Disable ufw IPv6
+      lineinfile:
+        dest: /etc/default/ufw
+        regexp: ^IPV6=
+        line: IPV6=no
+        state: present
+      become: true
+      when: HARDENING_FIREWALL_DISABLE_IPV6
+
+    - name: Reset UFW rules
+      ufw:
+        state: reset
+      become: true
+      when: HARDENING_FIREWALL_RESET
+
+    - name: Open SSH port
+      ufw:
+        rule: allow
+        port: '{{ HARDENING_FIREWALL_SSH_PORT }}'
+        proto: tcp
+      become: true
+      when: HARDENING_FIREWALL_OPEN_SSH_PORT
+
+    - name: Enable UFW
+      ufw:
+        state: enabled
+      become: true
+
+  when: firewall_backend == 'ufw'
