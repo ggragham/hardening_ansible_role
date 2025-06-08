@@ -7,42 +7,42 @@
 - name: Auth config
   import_tasks: auth.yml
   when:
-    - AUTH_FAILLOCK_CONFIG_ENABLED
+    - HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED
     - ansible_os_family == "RedHat"
   tags: auth
 
 - name: Network tasks
   import_tasks: network.yml
-  when: NETWORK_CONFIG_ENABLED
+  when: HARDENING_NETWORK_CONFIG_ENABLED
   tags: network
 
 - name: Tasks for Debian-based systems
   import_tasks: debian.yml
   when:
-    - DEBIAN_HARDENING_ENABLED
+    - HARDENING_DEBIAN_HARDENING_ENABLED
     - ansible_os_family == "Debian"
   tags: debian
 
 - name: Tasks for RedHat-based systems
   import_tasks: redhat.yml
   when:
-    - REDHAT_HARDENING_ENABLED
+    - HARDENING_REDHAT_HARDENING_ENABLED
     - ansible_os_family == "RedHat"
   tags: redhat
 
 - name: Config SSH
   import_tasks: ssh.yml
-  when: SSH_CONFIG_ENABLED
+  when: HARDENING_SSH_CONFIG_ENABLED
   tags: ssh
 
 - name: Install and config fail2ban
   import_tasks: fail2ban.yml
-  when: FAIL2BAN_ENABLED
+  when: HARDENING_FAIL2BAN_ENABLED
   tags: fail2ban
 
 - name: Install and config chrony
   import_tasks: chrony.yml
-  when: CHRONY_ENABLED
+  when: HARDENING_CHRONY_ENABLED
   tags: chrony
 
 - name: Firewall config

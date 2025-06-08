@@ -30,4 +30,4 @@
         state: present
         password_lock: true
       become: true
-      when: SSH_REMOVE_ROOT_PASSWORD_ENABLED
+      when: HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED

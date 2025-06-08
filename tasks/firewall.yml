@@ -149,7 +149,7 @@
     - name: Allow SSH on default zone
       firewalld:
         zone: default
-        port: '{{ SSH_PORT }}/tcp'
+        port: '{{ HARDENING_SSH_PORT }}/tcp'
         permanent: true
         state: enabled
       become: true

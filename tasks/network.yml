@@ -11,4 +11,4 @@
   loop_control:
     loop_var: ipv6_kernel_parameter
   become: true
-  when: NETWORK_DISABLE_IPV6
+  when: HARDENING_NETWORK_DISABLE_IPV6

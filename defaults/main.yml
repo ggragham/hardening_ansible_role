@@ -3,6 +3,7 @@
 ###  Base vars  ###
 ###################
 USERNAME: user
+SSH_PORT: 22
 
 ##################################
 ###  Base hardening role vars  ###
@@ -10,45 +11,44 @@ USERNAME: user
 HARDENING_CONFIG_ENABLED: true
 HARDENING_YESCTYPT_HOST_FACTOR: 8
 
-AUTH_FAILLOCK_CONFIG_ENABLED: true  # Enable or disable faillock.
-AUTH_FAILLOCK_MAX_ATTEMPTS: 3  # Maximum number of failed login attempts.
-AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after exceeding attempts.
+HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED: true  # Enable or disable faillock.
+HARDENING_AUTH_FAILLOCK_MAX_ATTEMPTS: 3  # Maximum number of failed login attempts.
+HARDENING_AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after exceeding attempts.
 
 ###########################
 ###  Network role vars  ###
 ###########################
-NETWORK_CONFIG_ENABLED: true  # Enable or disable network configuration.
-NETWORK_DISABLE_IPV6: true  # Enable or disable ipv6 stack configuration.
+HARDENING_NETWORK_CONFIG_ENABLED: true  # Enable or disable network configuration.
+HARDENING_NETWORK_DISABLE_IPV6: true  # Enable or disable ipv6 stack configuration.
 
 ###############################
 ###  Debian-based role vars  ##
 ###############################
-DEBIAN_HARDENING_ENABLED: true  # Enable or disable Debian- configuration.
+HARDENING_DEBIAN_HARDENING_ENABLED: true  # Enable or disable Debian- configuration.
 
 ###############################
 ###  RedHat-based role vars  ##
 ###############################
-REDHAT_HARDENING_ENABLED: true  # Enable or disable RedHat-based configuration.
+HARDENING_REDHAT_HARDENING_ENABLED: true  # Enable or disable RedHat-based configuration.
 
 #######################
 ###  SSH role vars  ###
 #######################
-SSH_CONFIG_ENABLED: true  # Enable or disable fail2ban configuration.
-SSH_PORT: 22  # Port for SSH access.
-SSH_REMOVE_ROOT_PASSWORD_ENABLED: true  # Enable or disable root password removal.
+HARDENING_SSH_CONFIG_ENABLED: true  # Enable or disable fail2ban configuration.
+HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED: true  # Enable or disable root password removal.
 
 ############################
 ###  fail2ban role vars  ###
 ############################
-FAIL2BAN_ENABLED: true  # Enable or disable fail2ban installation.
-FAIL2BAN_BANTIME: 5m  # Duration for which IPs are banned.
-FAIL2BAN_FINDTIME: 3m  # Time window to consider failed login attempts.
-FAIL2BAN_MAXRETRY: 5  # Number of allowed failed login attempts before banning IP.
+HARDENING_FAIL2BAN_ENABLED: true  # Enable or disable fail2ban installation.
+HARDENING_FAIL2BAN_BANTIME: 5m  # Duration for which IPs are banned.
+HARDENING_FAIL2BAN_FINDTIME: 3m  # Time window to consider failed login attempts.
+HARDENING_FAIL2BAN_MAXRETRY: 5  # Number of allowed failed login attempts before banning IP.
 
 ##########################
 ###  chrony role vars  ###
 ##########################
-CHRONY_ENABLED: true  # Enable or disable fail2ban installation.
+HARDENING_CHRONY_ENABLED: true  # Enable or disable fail2ban installation.
 
 ############################
 ###  Firewall role vars  ###
@@ -58,10 +58,10 @@ HARDENING_FIREWALL_ENABLED: true  # Enable or disable firewall hardening.
 # Leave empty to use existing firewall installation or throw an error 
 # if no firewall is present on the system.
 HARDENING_FIREWALL_BACKEND: ''
-HARDENING_FIREWALL_DISABLE_IPV6: '{{ NETWORK_DISABLE_IPV6 }}'  # Enable or disable IPv6 support in firewall rules.
+HARDENING_FIREWALL_DISABLE_IPV6: '{{ HARDENING_NETWORK_DISABLE_IPV6 }}'  # Enable or disable IPv6 support in firewall rules.
 HARDENING_FIREWALL_RESET: false  # Enable or disable resetting the firewall rules.
 HARDENING_FIREWALL_OPEN_SSH_PORT: true  # Enable or disable opening the SSH port in the firewall.
-HARDENING_FIREWALL_SSH_PORT: '{{ SSH_PORT }}'  # Specify the SSH port to open in the firewall configuration.
+HARDENING_FIREWALL_SSH_PORT: '{{ HARDENING_SSH_PORT }}'  # Specify the SSH port to open in the firewall configuration.
 
 HARDENING_FIREWALL_INTERFACE_LIST:  # List of network interfaces to apply firewall rules to.
   - eth0

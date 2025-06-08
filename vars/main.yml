@@ -2,4 +2,4 @@
 #######################
 ###  SSH role vars  ###
 #######################
-SSH_USERNAME: '{{ USERNAME }}'
+HARDENING_SSH_PORT: '{{ SSH_PORT }}'  # Port for SSH access.
