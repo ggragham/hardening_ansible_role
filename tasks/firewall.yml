@@ -113,3 +113,78 @@
       become: true
 
   when: firewall_backend == 'ufw'
+
+- name: Configure default firewalld rules
+  block:
+    - name: Ensure firewalld is started
+      systemd:
+        name: firewalld
+        state: started
+        enabled: true
+      become: true
+
+    - name: Remove default zone
+      firewalld:
+        zone: default
+        state: absent
+        permanent: true
+      become: true
+      when: HARDENING_FIREWALL_RESET
+
+    - name: Create default zone
+      firewalld:
+        zone: default
+        state: present
+        permanent: true
+      become: true
+
+    - name: Set DROP target to default zone
+      firewalld:
+        zone: default
+        target: DROP
+        permanent: true
+        state: present
+      become: true
+
+    - name: Allow SSH on default zone
+      firewalld:
+        zone: default
+        port: '{{ SSH_PORT }}/tcp'
+        permanent: true
+        state: enabled
+      become: true
+      when: HARDENING_FIREWALL_OPEN_SSH_PORT
+
+    - name: Add interfaces to the default zone
+      firewalld:
+        zone: default
+        interface: '{{ firewalld_interface }}'
+        permanent: true
+        state: enabled
+      loop_control:
+        loop_var: firewalld_interface
+      loop: '{{ HARDENING_FIREWALL_INTERFACE_LIST }}'
+      become: true
+
+    - name: Reload firewalld to apply changes
+      command: firewall-cmd --reload
+      become: true
+
+    - name: Set default zone to default
+      block:
+        - name: Check current default firewalld zone
+          command: firewall-cmd --get-default-zone
+          register: current_zone
+          become: true
+
+        - name: Set default zone if not already set
+          command: firewall-cmd --set-default-zone=default
+          when: current_zone.stdout != "default"
+          become: true
+
+        - name: Reload firewalld initially to apply other changes
+          command: firewall-cmd --reload
+          when: current_zone.stdout != "default"
+          become: true
+
+  when: firewall_backend == 'firewalld'
