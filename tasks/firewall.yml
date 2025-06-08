@@ -188,3 +188,62 @@
           become: true
 
   when: firewall_backend == 'firewalld'
+
+- name: Configure default iptables rules
+  block:
+    - name: Configure iptables on Debian-based distro
+      vars:
+        iptables_rules_path: /etc/iptables/rules.v4
+      block:
+        - name: Install iptables-persistent
+          apt:
+            name: iptables-persistent
+            state: latest
+            update_cache: true
+          become: true
+
+        - name: Deploy iptables config
+          template:
+            src: firewall_iptables.rules.j2
+            dest: '{{ iptables_rules_path }}'
+            mode: '0600'
+          become: true
+
+        - name: Apply iptables rules from config
+          community.general.iptables_state:
+            state: restored
+            path: '{{ iptables_rules_path }}'
+          async: '{{ ansible_timeout }}'
+          poll: 0
+          become: true
+      when: ansible_os_family == 'Debian'
+
+    - name: Configure iptables on RedHat-based distro
+      vars:
+        iptables_rules_path: /etc/sysconfig/iptables
+      block:
+        - name: Install iptables-services
+          dnf:
+            name: iptables-services
+            state: latest
+            update_cache: true
+            install_weak_deps: false
+          become: true
+
+        - name: Deploy iptables config
+          template:
+            src: firewall_iptables.rules.j2
+            dest: '{{ iptables_rules_path }}'
+            mode: '0600'
+          become: true
+
+        - name: Apply iptables rules from config
+          community.general.iptables_state:
+            state: restored
+            path: '{{ iptables_rules_path }}'
+          async: '{{ ansible_timeout }}'
+          poll: 0
+          become: true
+      when: ansible_os_family == 'RedHat'
+
+  when: firewall_backend == 'iptables'

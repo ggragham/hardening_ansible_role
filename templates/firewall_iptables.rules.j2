@@ -1,0 +1,14 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+-A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+{% if HARDENING_FIREWALL_OPEN_SSH_PORT %}
+{% for iptables_interface in HARDENING_FIREWALL_INTERFACE_LIST %}
+-A INPUT -i {{ iptables_interface }} -p tcp --dport {{ HARDENING_FIREWALL_SSH_PORT }} -m conntrack --ctstate NEW -j ACCEPT
+{% endfor %}
+{% endif %}
+
+COMMIT
