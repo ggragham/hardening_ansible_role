@@ -8,42 +8,42 @@ SSH_PORT: 22
 ##################################
 ###  Misc hardening role vars  ###
 ##################################
-HARDENING_MISC_CONFIG_ENABLED: true  # Enable or disable miscellaneous hardning tasks.
+HARDENING_MISC_CONFIG_ENABLED: false  # Enable or disable miscellaneous hardning tasks.
 HARDENING_MISC_YESCTYPT_HOST_FACTOR: 8  # Yescrypt factor for password hashing difficulty.
 
 ##################################
 ###  Auth hardening role vars  ###
 ##################################
-HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED: true  # Enable or disable faillock.
+HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED: false  # Enable or disable faillock.
 HARDENING_AUTH_FAILLOCK_MAX_ATTEMPTS: 3  # Maximum number of failed login attempts.
 HARDENING_AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after exceeding attempts.
 
 ###########################
 ###  Network role vars  ###
 ###########################
-HARDENING_NETWORK_CONFIG_ENABLED: true  # Enable or disable network configuration.
-HARDENING_NETWORK_DISABLE_IPV6: true  # Enable or disable ipv6 stack disabling.
+HARDENING_NETWORK_CONFIG_ENABLED: false  # Enable or disable network configuration.
+HARDENING_NETWORK_DISABLE_IPV6: false  # Enable or disable ipv6 stack disabling.
 
 ###############################
 ###  Debian-based role vars  ##
 ###############################
-HARDENING_DEBIAN_HARDENING_ENABLED: true  # Enable or disable Debian-based configuration.
+HARDENING_DEBIAN_HARDENING_ENABLED: false  # Enable or disable Debian-based configuration.
 
 ###############################
 ###  RedHat-based role vars  ##
 ###############################
-HARDENING_REDHAT_HARDENING_ENABLED: true  # Enable or disable RedHat-based configuration.
+HARDENING_REDHAT_HARDENING_ENABLED: false  # Enable or disable RedHat-based configuration.
 
 #######################
 ###  SSH role vars  ###
 #######################
-HARDENING_SSH_CONFIG_ENABLED: true  # Enable or disable ssh configuration.
-HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED: true  # Enable or disable root password removal.
+HARDENING_SSH_CONFIG_ENABLED: false  # Enable or disable ssh configuration.
+HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED: false  # Enable or disable root password removal.
 
 ############################
 ###  fail2ban role vars  ###
 ############################
-HARDENING_FAIL2BAN_ENABLED: true  # Enable or disable fail2ban installation.
+HARDENING_FAIL2BAN_ENABLED: false  # Enable or disable fail2ban installation.
 HARDENING_FAIL2BAN_BANTIME: 5m  # Duration for which IPs are banned.
 HARDENING_FAIL2BAN_FINDTIME: 3m  # Time window to consider failed login attempts.
 HARDENING_FAIL2BAN_MAXRETRY: 5  # Number of allowed failed login attempts before banning IP.
@@ -51,12 +51,12 @@ HARDENING_FAIL2BAN_MAXRETRY: 5  # Number of allowed failed login attempts before
 ##########################
 ###  chrony role vars  ###
 ##########################
-HARDENING_CHRONY_ENABLED: true  # Enable or disable chrony installation.
+HARDENING_CHRONY_ENABLED: false  # Enable or disable chrony installation.
 
 ############################
 ###  Firewall role vars  ###
 ############################
-HARDENING_FIREWALL_ENABLED: true  # Enable or disable firewall hardening.
+HARDENING_FIREWALL_ENABLED: false  # Enable or disable firewall hardening.
 # Specify the backend for the firewall (options: ufw, firewalld, iptables).
 # Leave empty to use existing firewall installation or throw an error 
 # if no firewall is present on the system.
