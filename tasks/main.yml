@@ -1,8 +1,8 @@
 ---
 - name: Base hardening task
-  import_tasks: hardening.yml
-  when: HARDENING_CONFIG_ENABLED
-  tags: hardening
+  import_tasks: misc.yml
+  when: HARDENING_MISC_CONFIG_ENABLED
+  tags: misc
 
 - name: Auth config
   import_tasks: auth.yml

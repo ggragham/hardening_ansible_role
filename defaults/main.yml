@@ -8,8 +8,8 @@ SSH_PORT: 22
 ##################################
 ###  Base hardening role vars  ###
 ##################################
-HARDENING_CONFIG_ENABLED: true
-HARDENING_YESCTYPT_HOST_FACTOR: 8
+HARDENING_MISC_CONFIG_ENABLED: true
+HARDENING_MISC_YESCTYPT_HOST_FACTOR: 8
 
 HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED: true  # Enable or disable faillock.
 HARDENING_AUTH_FAILLOCK_MAX_ATTEMPTS: 3  # Maximum number of failed login attempts.
