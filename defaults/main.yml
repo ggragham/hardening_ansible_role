@@ -61,10 +61,8 @@ HARDENING_FIREWALL_ENABLED: false  # Enable or disable firewall hardening.
 # Leave empty to use existing firewall installation or throw an error 
 # if no firewall is present on the system.
 HARDENING_FIREWALL_BACKEND: ''
-HARDENING_FIREWALL_DISABLE_IPV6: '{{ HARDENING_NETWORK_DISABLE_IPV6 }}'  # Enable or disable IPv6 support in firewall rules.
 HARDENING_FIREWALL_RESET: false  # Enable or disable resetting the firewall rules.
 HARDENING_FIREWALL_OPEN_SSH_PORT: true  # Enable or disable opening the SSH port in the firewall.
-HARDENING_FIREWALL_SSH_PORT: '{{ HARDENING_SSH_PORT }}'  # Specify the SSH port to open in the firewall configuration.
 
 HARDENING_FIREWALL_INTERFACE_LIST:  # List of network interfaces to apply firewall rules to.
   - eth0

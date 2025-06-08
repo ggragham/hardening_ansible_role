@@ -3,3 +3,9 @@
 ###  SSH role vars  ###
 #######################
 HARDENING_SSH_PORT: '{{ SSH_PORT }}'  # Port for SSH access.
+
+############################
+###  Firewall role vars  ###
+############################
+HARDENING_FIREWALL_DISABLE_IPV6: '{{ HARDENING_NETWORK_DISABLE_IPV6 }}'  # Enable or disable IPv6 support in firewall rules.
+HARDENING_FIREWALL_SSH_PORT: '{{ HARDENING_SSH_PORT }}'  # Specify the SSH port to open in the firewall configuration.
