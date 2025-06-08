@@ -1,18 +1,106 @@
-Hardening
+Hardening Role
 =========
 
 Set of hardening tasks designed to enforce security on Linux systems.
 
+## ⚠️ **Warning**:
+Only use this role if you are familiar with its configurations and understand the implications of the changes it will make. Improper use may result in system misconfigurations or reduced accessibility.
+
+**Special Attention Required**:  
+Do not enable `HARDENING_SSH_CONFIG_ENABLED` unless there is a privileged user in the system to which the user has access. Enabling this variable without proper user access can lead to loss of control over the system and potentially lock you out.
+
+Take extra care when configuring the firewall settings, particularly with the `HARDENING_FIREWALL_INTERFACE_LIST` and the SSH port (`SSH_PORT`). Incorrect settings in this area could prevent access to the system entirely.
+
 Role Variables
 --------------
+
+```yml
+###################
+###  Base vars  ###
+###################
+USERNAME: user
+SSH_PORT: 22
+
+##################################
+###  Misc hardening role vars  ###
+##################################
+HARDENING_MISC_CONFIG_ENABLED: false  # Enable or disable miscellaneous hardning tasks.
+HARDENING_MISC_YESCTYPT_HOST_FACTOR: 8  # Yescrypt factor for password hashing difficulty.
+
+##################################
+###  Auth hardening role vars  ###
+##################################
+HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED: false  # Enable or disable faillock.
+HARDENING_AUTH_FAILLOCK_MAX_ATTEMPTS: 3  # Maximum number of failed login attempts.
+HARDENING_AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after exceeding attempts.
+
+###########################
+###  Network role vars  ###
+###########################
+HARDENING_NETWORK_CONFIG_ENABLED: false  # Enable or disable network configuration.
+HARDENING_NETWORK_DISABLE_IPV6: false  # Enable or disable ipv6 stack disabling.
+
+###############################
+###  Debian-based role vars  ##
+###############################
+HARDENING_DEBIAN_HARDENING_ENABLED: false  # Enable or disable Debian-based configuration.
+
+###############################
+###  RedHat-based role vars  ##
+###############################
+HARDENING_REDHAT_HARDENING_ENABLED: false  # Enable or disable RedHat-based configuration.
+
+#######################
+###  SSH role vars  ###
+#######################
+HARDENING_SSH_CONFIG_ENABLED: false  # Enable or disable ssh configuration.
+HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED: false  # Enable or disable root password removal.
+
+############################
+###  fail2ban role vars  ###
+############################
+HARDENING_FAIL2BAN_ENABLED: false  # Enable or disable fail2ban installation.
+HARDENING_FAIL2BAN_BANTIME: 5m  # Duration for which IPs are banned.
+HARDENING_FAIL2BAN_FINDTIME: 3m  # Time window to consider failed login attempts.
+HARDENING_FAIL2BAN_MAXRETRY: 5  # Number of allowed failed login attempts before banning IP.
+
+##########################
+###  chrony role vars  ###
+##########################
+HARDENING_CHRONY_ENABLED: false  # Enable or disable chrony installation.
+
+############################
+###  Firewall role vars  ###
+############################
+HARDENING_FIREWALL_ENABLED: false  # Enable or disable firewall hardening.
+# Specify the backend for the firewall (options: ufw, firewalld, iptables).
+# Leave empty to use existing firewall installation or throw an error 
+# if no firewall is present on the system.
+HARDENING_FIREWALL_BACKEND: ''
+HARDENING_FIREWALL_DISABLE_IPV6: '{{ HARDENING_NETWORK_DISABLE_IPV6 }}'  # Enable or disable IPv6 support in firewall rules.
+HARDENING_FIREWALL_RESET: false  # Enable or disable resetting the firewall rules.
+HARDENING_FIREWALL_OPEN_SSH_PORT: true  # Enable or disable opening the SSH port in the firewall.
+HARDENING_FIREWALL_SSH_PORT: '{{ HARDENING_SSH_PORT }}'  # Specify the SSH port to open in the firewall configuration.
+
+HARDENING_FIREWALL_INTERFACE_LIST:  # List of network interfaces to apply firewall rules to.
+  - eth0
+  - wlp2s0
+```
+
+Installing Role
+---------------
+```bash
+ansible-galaxy install git+https://github.com/ggragham/hardening_ansible_role.git
+```
 
 Example Playbook
 ----------------
 
 ```yml
-  - hosts: servers
+  - name: Server configuration
+    hosts: servers
     roles:
-       - role: hardening
+       - role: hardening_ansible_role
 ```
 
 License
