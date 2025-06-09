@@ -155,17 +155,6 @@
       become: true
       when: HARDENING_FIREWALL_OPEN_SSH_PORT
 
-    - name: Add interfaces to the default zone
-      firewalld:
-        zone: default
-        interface: '{{ firewalld_interface }}'
-        permanent: true
-        state: enabled
-      loop_control:
-        loop_var: firewalld_interface
-      loop: '{{ HARDENING_FIREWALL_INTERFACE_LIST }}'
-      become: true
-
     - name: Reload firewalld to apply changes
       command: firewall-cmd --reload
       become: true
