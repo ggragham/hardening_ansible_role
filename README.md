@@ -15,17 +15,19 @@ Role Variables
 --------------
 
 ```yml
-###################
-###  Base vars  ###
-###################
-USERNAME: user
-SSH_PORT: 22
+#####################
+###  Common vars  ###
+#####################
+# Common variables shared across all roles/playbooks.
+USERNAME: user  # Default system user.
+SSH_PORT: 22  # SSH port used for access and hardening rules.
 
 ##################################
 ###  Misc hardening role vars  ###
 ##################################
-HARDENING_MISC_CONFIG_ENABLED: false  # Enable or disable miscellaneous hardning tasks.
-HARDENING_MISC_YESCTYPT_HOST_FACTOR: 8  # Yescrypt factor for password hashing difficulty.
+HARDENING_MISC_CONFIG_ENABLED: false  # Enable or disable miscellaneous hardening tasks.
+HARDENING_MISC_YESCRYPT_HOST_FACTOR: 8  # Yescrypt factor for password hashing difficulty.
+HARDENING_MISC_NODE_TYPE: desktop  # Specify the type of node (server or desktop).
 
 ##################################
 ###  Auth hardening role vars  ###
@@ -38,7 +40,7 @@ HARDENING_AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after ex
 ###  Network role vars  ###
 ###########################
 HARDENING_NETWORK_CONFIG_ENABLED: false  # Enable or disable network configuration.
-HARDENING_NETWORK_DISABLE_IPV6: false  # Enable or disable ipv6 stack disabling.
+HARDENING_NETWORK_DISABLE_IPV6: false  # Enable or disable IPv6 stack disabling.
 
 ###############################
 ###  Debian-based role vars  ##
@@ -53,34 +55,31 @@ HARDENING_REDHAT_HARDENING_ENABLED: false  # Enable or disable RedHat-based conf
 #######################
 ###  SSH role vars  ###
 #######################
-HARDENING_SSH_CONFIG_ENABLED: false  # Enable or disable ssh configuration.
+HARDENING_SSH_CONFIG_ENABLED: false  # Enable or disable SSH configuration.
 HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED: false  # Enable or disable root password removal.
 
 ############################
-###  fail2ban role vars  ###
+###  Fail2Ban role vars  ###
 ############################
-HARDENING_FAIL2BAN_ENABLED: false  # Enable or disable fail2ban installation.
+HARDENING_FAIL2BAN_ENABLED: false  # Enable or disable Fail2Ban installation.
 HARDENING_FAIL2BAN_BANTIME: 5m  # Duration for which IPs are banned.
 HARDENING_FAIL2BAN_FINDTIME: 3m  # Time window to consider failed login attempts.
 HARDENING_FAIL2BAN_MAXRETRY: 5  # Number of allowed failed login attempts before banning IP.
 
 ##########################
-###  chrony role vars  ###
+###  Chrony role vars  ###
 ##########################
-HARDENING_CHRONY_ENABLED: false  # Enable or disable chrony installation.
+HARDENING_CHRONY_ENABLED: false  # Enable or disable Chrony installation.
 
 ############################
 ###  Firewall role vars  ###
 ############################
 HARDENING_FIREWALL_ENABLED: false  # Enable or disable firewall hardening.
-# Specify the backend for the firewall (options: ufw, firewalld, iptables).
-# Leave empty to use existing firewall installation or throw an error 
-# if no firewall is present on the system.
+# Specify the firewall backend (options: ufw, firewalld, iptables).
+# Leave empty to autodetect. Fails if no supported firewall is found.
 HARDENING_FIREWALL_BACKEND: ''
-HARDENING_FIREWALL_DISABLE_IPV6: '{{ HARDENING_NETWORK_DISABLE_IPV6 }}'  # Enable or disable IPv6 support in firewall rules.
 HARDENING_FIREWALL_RESET: false  # Enable or disable resetting the firewall rules.
 HARDENING_FIREWALL_OPEN_SSH_PORT: true  # Enable or disable opening the SSH port in the firewall.
-HARDENING_FIREWALL_SSH_PORT: '{{ HARDENING_SSH_PORT }}'  # Specify the SSH port to open in the firewall configuration.
 
 HARDENING_FIREWALL_INTERFACE_LIST:  # List of network interfaces to apply firewall rules to.
   - eth0
