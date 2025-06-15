@@ -28,8 +28,8 @@
       become: true
 
     - name: Blacklist unused modules
-      copy:
-        src: misc_modules_blacklist.conf
+      template:
+        src: misc_modules_blacklist.conf.j2
         dest: /etc/modprobe.d/blacklist.conf
         mode: 0640
       become: true
