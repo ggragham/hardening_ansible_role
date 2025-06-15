@@ -8,7 +8,6 @@ install firewire-ohci /bin/true
 install firewire_ohci /bin/true
 install firewire_sbp2 /bin/true
 install firewire-sbp2 /bin/true
-# install thunderbolt /bin/true
 install n-hdlc /bin/false
 install ax25 /bin/false
 install netrom /bin/false
@@ -20,15 +19,15 @@ install af_802154 /bin/false
 install ipx /bin/false
 install appletalk /bin/false
 install psnap /bin/false
-# install p8023 /bin/false
-# install p8022 /bin/false
+install p8023 /bin/false
+install p8022 /bin/false
 install can /bin/false
 install atm /bin/false
 install cramfs /bin/false
 install freevxfs /bin/false
-install jffs2 /bin/false
-install hfs /bin/false
-install hfsplus /bin/false
+# install jffs2 /bin/false
+# install hfs /bin/false
+# install hfsplus /bin/false
 # install squashfs /bin/false
 # install udf /bin/false
 # install cifs /bin/true
@@ -45,10 +44,13 @@ install raw1394 /bin/false
 install video1394 /bin/false
 install msr /bin/true
 install vivid /bin/false
+# install thunderbolt /bin/true
+
+{% if HARDENING_MISC_NODE_TYPE == 'server' %}
 install bluetooth /bin/false
 install btusb /bin/false
 install uvcvideo /bin/false
-
+{% endif %}
 
 blacklist tipc
 blacklist dccp
