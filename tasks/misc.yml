@@ -13,7 +13,7 @@
           lineinfile:
             path: /etc/login.defs
             regexp: ^#?YESCRYPT_COST_FACTOR
-            line: YESCRYPT_COST_FACTOR {{ HARDENING_MISC_YESCTYPT_HOST_FACTOR }}
+            line: YESCRYPT_COST_FACTOR {{ HARDENING_MISC_YESCRYPT_HOST_FACTOR }}
             state: present
             backrefs: true
       become: true

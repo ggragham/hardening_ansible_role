@@ -9,7 +9,7 @@ SSH_PORT: 22
 ###  Misc hardening role vars  ###
 ##################################
 HARDENING_MISC_CONFIG_ENABLED: false  # Enable or disable miscellaneous hardning tasks.
-HARDENING_MISC_YESCTYPT_HOST_FACTOR: 8  # Yescrypt factor for password hashing difficulty.
+HARDENING_MISC_YESCRYPT_HOST_FACTOR: 8  # Yescrypt factor for password hashing difficulty.
 
 ##################################
 ###  Auth hardening role vars  ###
