@@ -1,4 +1,12 @@
 ---
+- name: Install EPEL release on RHEL-based system
+  dnf:
+    name: epel-release
+    state: latest
+    update_cache: true
+    install_weak_deps: false
+  when: ansible_distribution in ["RedHat", "Alma", "AlmaLinux", "Rocky", "RockyLinux"]
+
 - name: Install fail2ban
   block:
     - name: Install fail2ban to Debian
