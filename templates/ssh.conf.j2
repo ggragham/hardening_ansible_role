@@ -1,5 +1,5 @@
 Port {{ HARDENING_SSH_PORT }}
-PermitRootLogin no
+PermitRootLogin {{ HARDENING_SSH_PERMIT_ROOT_LOGIN }}
 MaxAuthTries 5
 MaxSessions 3
 PasswordAuthentication no
