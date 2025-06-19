@@ -57,7 +57,10 @@ HARDENING_REDHAT_HARDENING_ENABLED: false  # Enable or disable RedHat-based conf
 #######################
 HARDENING_SSH_CONFIG_ENABLED: false  # Enable or disable SSH configuration.
 HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED: false  # Enable or disable root password removal.
-HARDENING_SSH_PERMIT_ROOT_LOGIN: yes  # Allow or disallow root login via SSH (yes/no).
+# Allow or disallow root login via SSH (yes/no).
+# Use the exact string format "{ 'yes' }" or "{ 'no' }" to prevent Ansible from converting values to booleans
+# and to stop linters from removing quotes.
+HARDENING_SSH_PERMIT_ROOT_LOGIN: "{ 'yes' }"
 
 ############################
 ###  Fail2Ban role vars  ###
