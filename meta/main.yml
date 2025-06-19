@@ -9,9 +9,12 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - 11
-        - 12
+        - bullseye
+        - bookworm
     - name: Fedora
       versions:
-        - 41
-        - 42
+        - '41'
+        - '42'
+    - name: EL
+      versions:
+        - all
