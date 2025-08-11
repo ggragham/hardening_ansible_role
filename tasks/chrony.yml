@@ -8,7 +8,7 @@
         update_cache: true
       when: ansible_os_family == 'Debian'
 
-    - name: Install chronyd to Fedora
+    - name: Install chronyd on RedHat family system
       dnf:
         name: chrony
         state: latest

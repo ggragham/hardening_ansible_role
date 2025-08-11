@@ -1,5 +1,5 @@
 ---
-- name: DNF disable countme on RedHat-based systems
+- name: DNF disable countme on RedHat family system
   blockinfile:
     path: /etc/dnf/dnf.conf
     block: |
@@ -32,7 +32,7 @@
   become: true
   when: ansible_distribution in ["RedHat", "Alma", "AlmaLinux", "Rocky", "RockyLinux"]
 
-- name: Update RedHat-based system
+- name: Update RedHat family system
   dnf:
     name: '*'
     state: latest

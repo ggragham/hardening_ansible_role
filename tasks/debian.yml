@@ -6,7 +6,7 @@
     mode: 0640
   become: true
 
-- name: Update deb-based system
+- name: Update Debian-based system
   apt:
     name: '*'
     state: latest

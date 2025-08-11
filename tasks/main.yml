@@ -16,14 +16,14 @@
   when: HARDENING_NETWORK_CONFIG_ENABLED
   tags: network
 
-- name: Tasks for Debian-based systems
+- name: Tasks for Debian-based system
   import_tasks: debian.yml
   when:
     - HARDENING_DEBIAN_HARDENING_ENABLED
     - ansible_os_family == "Debian"
   tags: debian
 
-- name: Tasks for RedHat-based systems
+- name: Tasks for RedHat family system
   import_tasks: redhat.yml
   when:
     - HARDENING_REDHAT_HARDENING_ENABLED

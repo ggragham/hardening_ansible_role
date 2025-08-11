@@ -10,14 +10,14 @@
 
 - name: Install fail2ban
   block:
-    - name: Install fail2ban to Debian
+    - name: Install fail2ban on Debian-based system
       apt:
         name: fail2ban
         state: latest
         update_cache: true
       when: ansible_os_family == 'Debian'
 
-    - name: Install fail2ban to Fedora
+    - name: Install fail2ban on RedHat family system
       dnf:
         name: fail2ban
         state: latest
