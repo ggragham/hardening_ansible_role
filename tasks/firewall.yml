@@ -33,18 +33,18 @@
           Please set HARDENING_FIREWALL_BACKEND to one of: ufw, firewalld, iptables.
       when: installed_firewalls | length == 0 and (HARDENING_FIREWALL_BACKEND | length == 0)
 
-    - name: Should install firewall?
-      set_fact:
-        should_install_firewall: >-
-          {{
-            HARDENING_FIREWALL_BACKEND | length > 0 and (
-              installed_firewalls == [] or
-              (
-                installed_firewalls == ['iptables'] and
-                HARDENING_FIREWALL_BACKEND != 'iptables'
-              )
-            )
-          }}
+    # - name: Should install firewall?
+    #   set_fact:
+    #     should_install_firewall: >-
+    #       {{
+    #         HARDENING_FIREWALL_BACKEND | length > 0 and (
+    #           installed_firewalls == [] or
+    #           (
+    #             installed_firewalls == ['iptables'] and
+    #             HARDENING_FIREWALL_BACKEND != 'iptables'
+    #           )
+    #         )
+    #       }}
 
     # - name: DEBUG
     #   debug:
@@ -72,7 +72,7 @@
           set_fact:
             installed_firewall_backend: '{{ HARDENING_FIREWALL_BACKEND }}'
       become: true
-      when: should_install_firewall
+      # when: should_install_firewall
 
     - name: Determine effective firewall backend
       set_fact:
