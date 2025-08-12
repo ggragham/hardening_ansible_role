@@ -193,7 +193,7 @@
 
         - name: Deploy iptables config
           template:
-            src: firewall_iptables.rules.j2
+            src: '{{ HARDENING_FIREWALL_IPTABLES_CONFIG_SRC }}'
             dest: '{{ iptables_rules_path }}'
             mode: '0600'
           become: true
@@ -221,7 +221,7 @@
 
         - name: Deploy iptables config
           template:
-            src: firewall_iptables.rules.j2
+            src: '{{ HARDENING_FIREWALL_IPTABLES_CONFIG_SRC }}'
             dest: '{{ iptables_rules_path }}'
             mode: '0600'
           become: true
