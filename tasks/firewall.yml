@@ -82,6 +82,35 @@
             | default(installed_firewalls[0] | default(''))
           }}
 
+    - name: Disable non-selected firewall backends
+      block:
+        - name: Determine firewalls to disable
+          set_fact:
+            firewalls_to_disable: >-
+              {{
+                (installed_firewalls | default([]))
+                | intersect(['ufw','firewalld'])
+                | difference([firewall_backend])
+              }}
+
+        - name: Disable UFW
+          systemd:
+            name: ufw
+            state: stopped
+            enabled: false
+          when: "'ufw' in firewalls_to_disable"
+          become: true
+
+        - name: Disable firewalld
+          systemd:
+            name: firewalld
+            state: stopped
+            enabled: false
+          when: "'firewalld' in firewalls_to_disable"
+          become: true
+
+      when: HARDENING_FIREWALL_BACKEND | length > 0
+
 - name: Configure default UFW rules
   block:
     - name: Disable ufw IPv6
