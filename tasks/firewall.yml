@@ -264,4 +264,11 @@
           become: true
       when: ansible_os_family == 'RedHat'
 
+    - name: Enable iptables
+      systemd:
+        name: iptables
+        state: started
+        enabled: true
+      become: true
+
   when: firewall_backend == 'iptables'
