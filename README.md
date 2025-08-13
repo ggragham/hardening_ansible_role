@@ -42,14 +42,14 @@ HARDENING_AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after ex
 HARDENING_NETWORK_CONFIG_ENABLED: false  # Enable or disable network configuration.
 HARDENING_NETWORK_DISABLE_IPV6: false  # Enable or disable IPv6 stack disabling.
 
-###############################
-###  Debian-based role vars  ##
-###############################
+################################
+###  Debian-based role vars  ###
+################################
 HARDENING_DEBIAN_HARDENING_ENABLED: false  # Enable or disable Debian-based configuration.
 
-###############################
-###  RedHat-based role vars  ##
-###############################
+#################################
+###  RedHat family role vars  ###
+#################################
 HARDENING_REDHAT_HARDENING_ENABLED: false  # Enable or disable RedHat-based configuration.
 
 #######################
@@ -57,10 +57,7 @@ HARDENING_REDHAT_HARDENING_ENABLED: false  # Enable or disable RedHat-based conf
 #######################
 HARDENING_SSH_CONFIG_ENABLED: false  # Enable or disable SSH configuration.
 HARDENING_SSH_REMOVE_ROOT_PASSWORD_ENABLED: false  # Enable or disable root password removal.
-# Allow or disallow root login via SSH (yes/no).
-# Use the exact string format "{ 'yes' }" or "{ 'no' }" to prevent Ansible from converting values to booleans
-# and to stop linters from removing quotes.
-HARDENING_SSH_PERMIT_ROOT_LOGIN: "{ 'yes' }"
+HARDENING_SSH_PERMIT_ROOT_LOGIN: true  # Allow or disallow root login via SSH.
 
 ############################
 ###  Fail2Ban role vars  ###
@@ -88,6 +85,13 @@ HARDENING_FIREWALL_OPEN_SSH_PORT: true  # Enable or disable opening the SSH port
 HARDENING_FIREWALL_INTERFACE_LIST:  # List of network interfaces to apply firewall rules to.
   - eth0
   - wlp2s0
+
+# NOTE: Applies ONLY to iptables.
+# Changing this parameter will ignore some of the firewall settings above
+# and apply the specified template as-is. Use at your own risk.
+# Path to the iptables configuration template file.
+# Defaults to the role's built-in template.
+HARDENING_FIREWALL_IPTABLES_CONFIG_SRC: firewall_iptables.rules.j2
 ```
 
 Installing Role
