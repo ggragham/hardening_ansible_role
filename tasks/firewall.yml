@@ -231,6 +231,7 @@
           community.general.iptables_state:
             state: restored
             path: '{{ iptables_rules_path }}'
+            noflush: true
           async: '{{ ansible_timeout }}'
           poll: 0
           become: true
