@@ -35,8 +35,8 @@
       become: true
 
     - name: Hardening kernel settings
-      copy:
-        src: misc_kernel.conf
+      template:
+        src: misc_kernel.conf.j2
         dest: /etc/sysctl.d/hardening.conf
         mode: 0640
       become: true
