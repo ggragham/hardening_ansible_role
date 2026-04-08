@@ -46,6 +46,7 @@ HARDENING_NETWORK_DISABLE_IPV6: false  # Enable or disable IPv6 stack disabling.
 ###  Debian-based role vars  ###
 ################################
 HARDENING_DEBIAN_HARDENING_ENABLED: false  # Enable or disable Debian-based configuration.
+HARDENING_DEBIAN_APT_SECCOMP_BPF_ENABLE: false  # Enable or disable seccomp BPF for APT.
 
 #################################
 ###  RedHat family role vars  ###
