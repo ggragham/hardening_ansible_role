@@ -208,67 +208,63 @@
   when: firewall_backend == 'firewalld'
 
 - name: Configure default iptables rules
+  vars:
+    iptables_os_config:
+      Debian:
+        package: iptables-persistent
+        rules_path: /etc/iptables/rules.v4
+        service: netfilter-persistent
+      RedHat:
+        package: iptables-services
+        rules_path: /etc/sysconfig/iptables
+        service: iptables
+
+    iptables_package: "{{ iptables_os_config[ansible_facts['os_family']].package }}"
+    iptables_rules_path: "{{ iptables_os_config[ansible_facts['os_family']].rules_path }}"
+    iptables_service: "{{ iptables_os_config[ansible_facts['os_family']].service }}"
+
   block:
-    - name: Configure iptables on Debian-based system
-      vars:
-        iptables_rules_path: /etc/iptables/rules.v4
-      block:
-        - name: Install iptables-persistent
-          apt:
-            name: iptables-persistent
-            state: latest
-            update_cache: true
-          become: true
+    - name: Install iptables persistence package on Debian-based system
+      apt:
+        name: '{{ iptables_package }}'
+        state: latest
+        update_cache: true
+      become: true
+      when: ansible_facts["os_family"] == "Debian"
 
-        - name: Deploy iptables config
-          template:
-            src: '{{ HARDENING_FIREWALL_IPTABLES_CONFIG_SRC }}'
-            dest: '{{ iptables_rules_path }}'
-            mode: '0600'
-          become: true
+    - name: Install iptables services package on RedHat-based system
+      dnf:
+        name: '{{ iptables_package }}'
+        state: latest
+        update_cache: true
+        install_weak_deps: false
+      become: true
+      when: ansible_facts["os_family"] == "RedHat"
 
-        - name: Apply iptables rules from config
-          community.general.iptables_state:
-            state: restored
-            path: '{{ iptables_rules_path }}'
-          async: '{{ ansible_timeout }}'
-          poll: 0
-          become: true
-      when: ansible_os_family == 'Debian'
+    - name: Deploy iptables config
+      template:
+        src: '{{ HARDENING_FIREWALL_IPTABLES_CONFIG_SRC }}'
+        dest: '{{ iptables_rules_path }}'
+        mode: '0600'
+      register: iptables_config_deploy
+      become: true
 
-    - name: Configure iptables on RedHat family system
-      vars:
-        iptables_rules_path: /etc/sysconfig/iptables
-      block:
-        - name: Install iptables-services
-          dnf:
-            name: iptables-services
-            state: latest
-            update_cache: true
-            install_weak_deps: false
-          become: true
+    - name: Apply iptables rules from config
+      community.general.iptables_state:
+        state: restored
+        path: '{{ iptables_rules_path }}'
+      async: '{{ ansible_timeout | default(300) }}'
+      poll: 0
+      become: true
+      when: iptables_config_deploy is changed
 
-        - name: Deploy iptables config
-          template:
-            src: '{{ HARDENING_FIREWALL_IPTABLES_CONFIG_SRC }}'
-            dest: '{{ iptables_rules_path }}'
-            mode: '0600'
-          become: true
-
-        - name: Apply iptables rules from config
-          community.general.iptables_state:
-            state: restored
-            path: '{{ iptables_rules_path }}'
-          async: '{{ ansible_timeout }}'
-          poll: 0
-          become: true
-      when: ansible_os_family == 'RedHat'
-
-    - name: Enable iptables
+    - name: Enable iptables persistence service
       systemd:
-        name: iptables
+        name: '{{ iptables_service }}'
         state: started
         enabled: true
       become: true
 
-  when: firewall_backend == 'iptables'
+  when:
+    - firewall_backend == "iptables"
+    - ansible_facts["os_family"] in ["Debian", "RedHat"]
