@@ -1,5 +1,5 @@
 Port {{ HARDENING_SSH_PORT }}
-PermitRootLogin {{ 'yes' if HARDENING_SSH_PERMIT_ROOT_LOGIN else 'no' }}
+PermitRootLogin {{ 'yes' if (HARDENING_SSH_PERMIT_ROOT_LOGIN | default(true) | bool) else 'no' }}
 MaxAuthTries 5
 MaxSessions 3
 PasswordAuthentication no

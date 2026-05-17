@@ -1,51 +1,51 @@
 ---
 - name: Base hardening task
   import_tasks: misc.yml
-  when: HARDENING_MISC_CONFIG_ENABLED
+  when: HARDENING_MISC_CONFIG_ENABLED | default(false) | bool
   tags: misc
 
 - name: Auth config
   import_tasks: auth.yml
   when:
-    - HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED
+    - HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED | default(false) | bool
     - ansible_os_family == "RedHat"
   tags: auth
 
 - name: Network tasks
   import_tasks: network.yml
-  when: HARDENING_NETWORK_CONFIG_ENABLED
+  when: HARDENING_NETWORK_CONFIG_ENABLED | default(false) | bool
   tags: network
 
 - name: Tasks for Debian-based system
   import_tasks: debian.yml
   when:
-    - HARDENING_DEBIAN_HARDENING_ENABLED
+    - HARDENING_DEBIAN_HARDENING_ENABLED | default(false) | bool
     - ansible_os_family == "Debian"
   tags: debian
 
 - name: Tasks for RedHat family system
   import_tasks: redhat.yml
   when:
-    - HARDENING_REDHAT_HARDENING_ENABLED
+    - HARDENING_REDHAT_HARDENING_ENABLED | default(false) | bool
     - ansible_os_family == "RedHat"
   tags: redhat
 
 - name: Config SSH
   import_tasks: ssh.yml
-  when: HARDENING_SSH_CONFIG_ENABLED
+  when: HARDENING_SSH_CONFIG_ENABLED | default(false) | bool
   tags: ssh
 
 - name: Install and config fail2ban
   import_tasks: fail2ban.yml
-  when: HARDENING_FAIL2BAN_ENABLED
+  when: HARDENING_FAIL2BAN_ENABLED | default(false) | bool
   tags: fail2ban
 
 - name: Install and config chrony
   import_tasks: chrony.yml
-  when: HARDENING_CHRONY_ENABLED
+  when: HARDENING_CHRONY_ENABLED | default(false) | bool
   tags: chrony
 
 - name: Firewall config
   import_tasks: firewall.yml
-  when: HARDENING_FIREWALL_ENABLED
+  when: HARDENING_FIREWALL_ENABLED | default(false) | bool
   tags: firewall

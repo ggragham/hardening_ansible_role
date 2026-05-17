@@ -126,7 +126,7 @@
       ufw:
         state: reset
       become: true
-      when: HARDENING_FIREWALL_RESET
+      when: HARDENING_FIREWALL_RESET | default(false) | bool
 
     - name: Open SSH port
       ufw:
@@ -134,7 +134,7 @@
         port: '{{ HARDENING_FIREWALL_SSH_PORT }}'
         proto: tcp
       become: true
-      when: HARDENING_FIREWALL_OPEN_SSH_PORT
+      when: HARDENING_FIREWALL_OPEN_SSH_PORT | default(true) | bool
 
     - name: Enable UFW
       ufw:
@@ -158,7 +158,7 @@
         state: absent
         permanent: true
       become: true
-      when: HARDENING_FIREWALL_RESET
+      when: HARDENING_FIREWALL_RESET | default(false) | bool
 
     - name: Create default zone
       firewalld:
@@ -182,7 +182,7 @@
         permanent: true
         state: enabled
       become: true
-      when: HARDENING_FIREWALL_OPEN_SSH_PORT
+      when: HARDENING_FIREWALL_OPEN_SSH_PORT | default(true) | bool
 
     - name: Reload firewalld to apply changes
       command: firewall-cmd --reload
