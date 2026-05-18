@@ -257,6 +257,7 @@
       poll: 0
       become: true
       when: iptables_config_deploy is changed
+      notify: Restart docker if exists
 
     - name: Enable iptables persistence service
       systemd:

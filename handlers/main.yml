@@ -16,3 +16,19 @@
     name: chronyd
     state: restarted
   become: true
+
+- name: Check docker is active
+  command: systemctl is-active docker
+  register: docker_service_status
+  failed_when: false
+  changed_when: false
+  become: true
+  listen: Restart docker if exists
+
+- name: Restart docker
+  service:
+    name: docker
+    state: restarted
+  become: true
+  when: docker_service_status.rc == 0
+  listen: Restart docker if exists
