@@ -7,7 +7,7 @@
 - name: Auth config
   import_tasks: auth.yml
   when:
-    - HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED | default(false) | bool
+    - HARDENING_AUTH_CONFIG_ENABLED | default(false) | bool
     - ansible_os_family == "RedHat"
   tags: auth
 

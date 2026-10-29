@@ -1,11 +1,4 @@
 ---
-- name: Apply faillock config
-  template:
-    src: auth_faillock.conf.j2
-    dest: /etc/security/faillock.conf
-    mode: 0640
-  become: true
-
 - name: Apply pwquality config
   template:
     src: auth_pwquality.conf.j2
@@ -13,6 +6,17 @@
     mode: 0640
   become: true
 
-- name: Enbale faillock
-  command: authselect enable-feature with-faillock
-  become: true
+- name: Faillock
+  block:
+    - name: Apply faillock config
+      template:
+        src: auth_faillock.conf.j2
+        dest: /etc/security/faillock.conf
+        mode: 0640
+      become: true
+
+    - name: Enbale faillock
+      command: authselect enable-feature with-faillock
+      become: true
+
+  when: HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED | default(false) | bool

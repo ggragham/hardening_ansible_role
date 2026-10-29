@@ -16,6 +16,7 @@ HARDENING_MISC_NODE_TYPE: desktop  # Specify the type of node (server or desktop
 ##################################
 ###  Auth hardening role vars  ###
 ##################################
+HARDENING_AUTH_CONFIG_ENABLED: false  # Enable or disable faillock.
 HARDENING_AUTH_FAILLOCK_CONFIG_ENABLED: false  # Enable or disable faillock.
 HARDENING_AUTH_FAILLOCK_MAX_ATTEMPTS: 3  # Maximum number of failed login attempts.
 HARDENING_AUTH_FAILLOCK_UNLOCK_TIME: 600  # Time (in seconds) to unlock after exceeding attempts.
