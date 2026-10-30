@@ -257,7 +257,19 @@
       poll: 0
       become: true
       when: iptables_config_deploy is changed
-      notify: Restart docker if exists
+
+    - name: Gather service facts
+      service_facts:
+      when: iptables_config_deploy is changed
+
+    - name: Restart Docker after iptables restore
+      service:
+        name: docker
+        state: restarted
+      become: true
+      when:
+        - iptables_config_deploy is changed
+        - "'docker.service' in ansible_facts.services"
 
     - name: Enable iptables persistence service
       systemd:
